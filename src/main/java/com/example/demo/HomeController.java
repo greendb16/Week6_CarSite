@@ -117,6 +117,7 @@ public class HomeController {
     @RequestMapping("/update/{id}")
     public String updateCar(@PathVariable("id") long id, Model model){
         model.addAttribute("car", carRepository.findById(id).get());
+        model.addAttribute("catagories", catagoryRepository.findAll());
         return "carForm";
     }
 
