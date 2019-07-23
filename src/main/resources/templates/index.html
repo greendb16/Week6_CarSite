@@ -3,26 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
-    <th:block>th:insert="base : MetaLinks"</th:block>
+    <th:block th:replace="base :: MetaLinks">...</th:block>
+
+    <style>
+        body{
+            background-image: url("https://res.cloudinary.com/dv2nrlkn5/image/upload/v1563906679/50-Beautiful-and-Minimalist-Presentation-Backgrounds-07_hrqusx.jpg");
+        }
+
+    </style>
 </head>
 <body>
-
-<a href="/addCatagory">New Catagory</a>
-<a href="/addCar">New Car</a>
-
- <div th:each="catagory : ${catagories}">
- <h4 th:text="${catagory.type}"></h4>
-    <ul >
-        <li th:each="car : ${catagory.cars}">
-            [[${car.year}]], [[${car.model}]]
-            <a  th:href="@{/detail/{id} (id=${car.id})}">Detail</a>
-            <a  th:href="@{/update/{id} (id=${car.id})}">Update</a>
-            <a  th:href="@{/delete/{id} (id=${car.id})}">Delete</a>
-        </li>
-
-    </ul>
- </div>
-
-<th:block>th:insert="base : bootstrap"</th:block>
+<th:block th:replace="base :: navbar">...</th:block>
+<br/><br/>
+<div class="container">
+<div class=" row">
+    <div class="col sm-4" th:each="catagory : ${catagories}">
+        <div class="container" style="border-radius: 50px 50px 50px 50px;  background-color: cornsilk">
+        <h3 align="center" th:text="${catagory.type}"></h3>
+        </div>
+        <div  th:each="car : ${cars}" th:if="${car.catagory == catagory}">
+            <div class="container">
+            <div align="center" class="card" style="width: 18rem;">
+                <img class="card-img-top" th:src="${car.pic}" alt="Card image cap">
+                <div align="center" class="card-body">
+                    <h5 class="card-title" style="text-align: center">[[${car.year}]] , [[${car.model}]]</h5>
+                    <a th:href="@{/detail/{id} (id=${car.id})}" class="btn btn-primary">Details</a>
+                </div>
+                </div>
+            </div>
+            <br/>
+        </div>
+    </div>
+    </div>
+</div>
+<th:block th:replace="base :: bootstrap">...</th:block>
 </body>
 </html>

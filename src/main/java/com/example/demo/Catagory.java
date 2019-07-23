@@ -12,7 +12,7 @@ public class Catagory {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(unique = true)
+//    @Column(unique = true)
     @NotNull
     private String type;
 

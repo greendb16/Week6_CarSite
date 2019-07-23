@@ -3,17 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Details</title>
-    <th:block>th:insert="base : MetaLinks"</th:block>
+    <th:block th:replace="base :: MetaLinks">...</th:block>
+
+    <style>
+        body{
+            background-image: url("https://res.cloudinary.com/dv2nrlkn5/image/upload/v1563906679/50-Beautiful-and-Minimalist-Presentation-Backgrounds-07_hrqusx.jpg");
+        }
+
+    </style>
 </head>
 <body>
-<a href="/">Home</a>
+<th:block th:replace="base :: navbar">...</th:block>
 
-<h2>[[${car.year}]], [[${car.model}]]</h2>
+<br/><br/><br/>
+<div class="continer">
+    <div class="jumbotron">
+        <h2 align="center">[[${car.year}]], [[${car.model}]]</h2>
 
-<p>PRICE: <b>$ [[${car.cost}]] </b> <br/> [[${car.catagory.type}]]</p>
+        <p align="center">PRICE: <b>$ [[${car.cost}]] </b> <br/> </p>
+        <div align="center">
+        <a th:href="@{/update/{id} (id=${car.id})}" class="btn btn-primary" >Update</a>
+        <a th:href="@{/delete/{id} (id=${car.id})}" class="btn btn-danger" >Delete</a>
+        </div>
+    </div>
+</div>
 
-
-
-<th:block th:insert="base :: bootstrap">...</th:block>
+<th:block th:replace="base :: bootstrap">...</th:block>
 </body>
 </html>

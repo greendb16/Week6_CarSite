@@ -30,6 +30,8 @@ public class Car {
     @JoinColumn(name="catagory_id")
     private Catagory catagory;
 
+    private String pic;
+
     public Car() {
     }
 
@@ -78,5 +80,13 @@ public class Car {
 
     public void setCatagory(Catagory catagory) {
         this.catagory = catagory;
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
     }
 }
