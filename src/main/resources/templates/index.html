@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+
+<a href="/addCatagory">New Catagory</a>
+<a href="/addCar">New Car</a>
+
+ <div th:each="catagory : ${catagories}">
+ <h4 th:text="${catagory.type}"></h4>
+    <ul >
+        <li th:each="car : ${catagory.cars}">
+            [[${car.year}]], [[${car.model}]]
+            <a  th:href="@{/detail/{id} (id=${car.id})}">Detail</a>
+            <a  th:href="@{/update/{id} (id=${car.id})}">Update</a>
+            <a  th:href="@{/delete/{id} (id=${car.id})}">Delete</a>
+        </li>
+
+    </ul>
+ </div>
+</body>
+</html>
