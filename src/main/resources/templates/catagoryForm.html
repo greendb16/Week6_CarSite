@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>New Catagory</title>
+    <th:block>th:insert="base : MetaLinks"</th:block>
 </head>
 <body>
 <form action="#" th:action="@{/processCatagory}" th:object="${catagory}" method="post">
@@ -14,5 +15,7 @@
         <input type="submit" value="submit">
 
 </form>
+
+<th:block>th:insert="base : bootstrap"</th:block>
 </body>
 </html>
