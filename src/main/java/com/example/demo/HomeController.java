@@ -46,23 +46,30 @@ public class HomeController {
         return "catagoryForm";
     }
 
-    @PostMapping("/processCar")
-    public String processCar(@Valid Car car, BindingResult result, @RequestParam("file")MultipartFile file){
 
-        if (file.isEmpty()){
-            car.setPic(null);
-        }
+
+//    hidden ImgURL maintain old associated img between updates
+    @PostMapping("/processCar")
+    public String processCar(@Valid Car car, BindingResult result, @RequestParam("file")MultipartFile file, @RequestParam("hiddenImgURL") String ImgURL){
+
         if(!file.isEmpty()){
             try{
                 Map uploadResult = cloudc.upload(file.getBytes(),
                         ObjectUtils.asMap("Resourcetype", "auto"));
                 car.setPic(uploadResult.get("url").toString());
                 carRepository.save(car);
-
             }catch (IOException e){
                 e.printStackTrace();
                 return "carForm";}
         }
+        else{
+        if (!ImgURL.isEmpty()){
+            car.setPic(ImgURL);
+        }
+        else {
+            car.setPic("");
+        }}
+
         if(result.hasErrors()){
             return "carForm";
         }
@@ -114,10 +121,14 @@ public class HomeController {
         carRepository.save(car);
     }
 
+
+//    hidden image url to allow update to pass back in
     @RequestMapping("/update/{id}")
-    public String updateCar(@PathVariable("id") long id, Model model){
+    public String updateCar(@ModelAttribute Car car, @ModelAttribute Catagory catagory, @PathVariable("id") long id, Model model){
         model.addAttribute("car", carRepository.findById(id).get());
         model.addAttribute("catagories", catagoryRepository.findAll());
+        car = carRepository.findById(id).get();
+        model.addAttribute("imageURL", car.getPic());
         return "carForm";
     }
 
@@ -126,6 +137,8 @@ public class HomeController {
         model.addAttribute(carRepository.findById(id).get());
         return "show";
     }
+//Work Around Cascade remove null association then delete
+
 
     @RequestMapping("/delete/{id}")
     public String deleteCar(@PathVariable("id") long id){
